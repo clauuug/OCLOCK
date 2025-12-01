@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>O'Clock</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- Splash / Intro -->
+    <section class="screen" id="splash">
+      <div class="screen-shell">
+        <div class="hero">
+          <div class="logo">O'Clock</div>
+          <p class="subtitle">Convierte tus tiempos de espera en algo que sí te aporta.</p>
+        </div>
+        <div class="hero-actions">
+          <div class="tag-pill">Listo para usarse en <strong>momentos de espera</strong></div>
+          <button class="primary-button" id="startButton">Empezar</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Onboarding 1 -->
+    <section class="screen" id="onboarding1" hidden>
+      <div class="screen-shell">
+        <div class="illustration"></div>
+        <h2>Aprovecha tus tiempos de espera</h2>
+        <p class="body-text">Diseñada para ratos como esperar el metro, en una fila o antes de entrar a clase.</p>
+        <div class="onboarding-footer">
+          <div class="progress-dots" aria-label="Progreso de onboarding">
+            <span class="dot active"></span><span class="dot"></span><span class="dot"></span>
+          </div>
+          <button class="primary-button" data-next="onboarding2">Siguiente</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Onboarding 2 -->
+    <section class="screen" id="onboarding2" hidden>
+      <div class="screen-shell">
+        <div class="illustration"></div>
+        <h2>Microactividades</h2>
+        <p class="body-text">Actividades breves organizadas en tres grupos:</p>
+        <ul class="pill-list">
+          <li>Jugar un momento</li>
+          <li>Aprender algo rápido</li>
+          <li>Relajarme un poco</li>
+        </ul>
+        <div class="onboarding-footer">
+          <div class="progress-dots" aria-label="Progreso de onboarding">
+            <span class="dot"></span><span class="dot active"></span><span class="dot"></span>
+          </div>
+          <button class="primary-button" data-next="onboarding3">Siguiente</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Onboarding 3 -->
+    <section class="screen" id="onboarding3" hidden>
+      <div class="screen-shell">
+        <div class="illustration"></div>
+        <h2>Personaliza tu experiencia</h2>
+        <p class="body-text">Marca favoritas y revisa tu historial para ver cómo aprovechas tu tiempo.</p>
+        <div class="onboarding-footer">
+          <div class="progress-dots" aria-label="Progreso de onboarding">
+            <span class="dot"></span><span class="dot"></span><span class="dot active"></span>
+          </div>
+          <button class="primary-button" data-next="home">Ir a la app</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Home -->
+    <section class="screen" id="home" hidden>
+      <div class="screen-shell">
+        <header class="top-bar">
+          <div>
+            <p class="eyebrow">Hola</p>
+            <h1>¿Qué te apetece hacer?</h1>
+          </div>
+          <div class="pill">Tiempo estimado <span id="totalTime">-</span></div>
+        </header>
+
+        <div class="card-grid">
+          <button class="card category" data-category="jugar">
+            <span class="icon-circle" aria-hidden="true">🎮</span>
+            <div class="card-title">JUGAR</div>
+            <p>Juegos mentales rápidos</p>
+          </button>
+          <button class="card category" data-category="aprender">
+            <span class="icon-circle" aria-hidden="true">📚</span>
+            <div class="card-title">APRENDER</div>
+            <p>Aprendizajes express</p>
+          </button>
+          <button class="card category" data-category="relajar">
+            <span class="icon-circle" aria-hidden="true">🌿</span>
+            <div class="card-title">RELÁJARME</div>
+            <p>Respiraciones y pausas</p>
+          </button>
+          <button class="card surprise" id="surpriseButton">
+            <span class="icon-circle" aria-hidden="true">✨</span>
+            <div class="card-title">SORPRÉNDEME</div>
+            <p>Elige algo por ti</p>
+          </button>
+        </div>
+
+        <section class="recent">
+          <div>
+            <p class="eyebrow">Actividad reciente</p>
+            <h3 id="recentActivity">Mini meditación • 3 min</h3>
+            <p class="muted">Guardamos tus últimas sesiones para que retomes fácil.</p>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- Activities List -->
+    <section class="screen" id="activities" hidden>
+      <div class="screen-shell">
+        <header class="section-header">
+          <div>
+            <p class="eyebrow" id="activitiesCategory">Actividades</p>
+            <h2>Explora opciones rápidas</h2>
+          </div>
+        </header>
+        <div id="activitiesList" class="list"></div>
+      </div>
+    </section>
+
+    <!-- Activity Detail -->
+    <section class="screen" id="activityDetail" hidden>
+      <div class="screen-shell">
+        <button class="back-button" data-back="activities">← Volver</button>
+        <div class="detail-header">
+          <div>
+            <p class="eyebrow" id="detailCategory">Categoría</p>
+            <h2 id="detailTitle">Actividad</h2>
+            <div class="pill" id="detailDuration">Tiempo estimado: 2 minutos</div>
+          </div>
+          <button class="secondary-button" id="favoriteButton">Marcar como favorita</button>
+        </div>
+        <ol id="detailSteps" class="steps"></ol>
+        <div class="detail-actions">
+          <button class="primary-button" id="startActivity">Empezar ahora</button>
+          <div class="pill">Tiempo estimado: <span id="detailTime">-</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- History -->
+    <section class="screen" id="history" hidden>
+      <div class="screen-shell">
+        <header class="section-header">
+          <p class="eyebrow">Historial</p>
+          <h2>Últimas actividades</h2>
+        </header>
+        <div id="historyList" class="list"></div>
+      </div>
+    </section>
+
+    <!-- Profile -->
+    <section class="screen" id="profile" hidden>
+      <div class="screen-shell">
+        <header class="section-header">
+          <p class="eyebrow">Perfil</p>
+          <h2>Tu ritmo, tus reglas</h2>
+        </header>
+        <div class="profile-card">
+          <div>
+            <p class="muted">Usuario</p>
+            <h3>María Usuaria</h3>
+          </div>
+          <div class="muted">Tiempo total aprovechado: <strong id="timeTotal">0 min</strong></div>
+        </div>
+
+        <div class="form-group">
+          <label for="goalSelect">Objetivo principal de uso</label>
+          <select id="goalSelect">
+            <option value="relajar">Quiero relajarme</option>
+            <option value="aprovechar">Quiero sentir que aprovecho el tiempo</option>
+            <option value="divertirme">Quiero divertirme un rato</option>
+          </select>
+        </div>
+        <p id="goalMessage" class="muted">Te ayudaremos a encontrar pausas que bajen tus pulsaciones.</p>
+
+        <section class="favorites">
+          <div class="section-header inline">
+            <div>
+              <p class="eyebrow">Favoritos</p>
+              <h3>Lo que te gusta repetir</h3>
+            </div>
+          </div>
+          <div id="favoritesList" class="list"></div>
+        </section>
+      </div>
+    </section>
+
+    <!-- Navigation bar -->
+    <nav class="nav-bar" id="navBar" hidden>
+      <button class="nav-item active" data-target="home">
+        <span class="nav-icon" aria-hidden="true">🏠</span>
+        <span>Inicio</span>
+      </button>
+      <button class="nav-item" data-target="activities">
+        <span class="nav-icon" aria-hidden="true">🧭</span>
+        <span>Actividades</span>
+      </button>
+      <button class="nav-item" data-target="history">
+        <span class="nav-icon" aria-hidden="true">🕑</span>
+        <span>Historial</span>
+      </button>
+      <button class="nav-item" data-target="profile">
+        <span class="nav-icon" aria-hidden="true">👤</span>
+        <span>Perfil</span>
+      </button>
+    </nav>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
